@@ -6,7 +6,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: lambda-function-textractbot
-      CodeUri: s3://yamagishihrd-artifacts/3d472f7f298e37be26b569f27f299fd5
+      CodeUri: s3://yamagishihrd-artifacts/f382803a0f3ffd1826e35f9944fc2f15
       Handler: main.lambda_handler
       Runtime: python3.8
       Timeout: 5

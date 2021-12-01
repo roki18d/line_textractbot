@@ -5,7 +5,6 @@ from io import BytesIO
 import sys, os
 import json
 import base64
-
 import logging
 import logging.config
 
@@ -17,23 +16,23 @@ from linebot.models import (MessageEvent, TextMessage, TextSendMessage, ImageMes
 from linebot.exceptions import (LineBotApiError, InvalidSignatureError)
 
 NEWLINE_CODE = '\r\n'
-SECRETS_MANAGER_SECRET_ARN = os.getenv('SECRETS_MANAGER_SECRET_ARN', None)
+SECRETS_MANAGER_SECRET_ARN = os.getenv("SECRETS_MANAGER_SECRET_ARN", None)
 LOGGING_CONFIG_FILE_LOCATION = './logging.conf'
 logging.config.fileConfig(LOGGING_CONFIG_FILE_LOCATION)
 
 def get_secret():
     logging.debug(f'Function "{sys._getframe().f_code.co_name}" was called.')
     try:
-        client = boto3.client(service_name='secretsmanager', region_name='ap-northeast-1')
-        get_secret_value_response = client.get_secret_value(SecretId=SECRETS_MANAGER_SECRET_ARN)
+        secretsmanager_client = boto3.client(service_name='secretsmanager', region_name='ap-northeast-1')
+        response = secretsmanager_client.get_secret_value(SecretId=SECRETS_MANAGER_SECRET_ARN)
     except ClientError as e:
         logging.error(e.message)
         raise e
     else:
-        if 'SecretString' in get_secret_value_response:
-            return json.loads(get_secret_value_response['SecretString'])
+        if "SecretString" in response:
+            return json.loads(response.get('SecretString'))
         else:
-            return json.loads(base64.b64decode(get_secret_value_response['SecretBinary']))
+            return json.loads(base64.b64decode(response.get("SecretBinary")))
 
 # Handler
 def lambda_handler(event, context): 
@@ -53,47 +52,35 @@ def lambda_handler(event, context):
     signature = event["headers"]["x-line-signature"]
     logging.debug({"body": body, "signature": signature})
 
-    # def textract(image=None):
-    #     logging.debug(f'Function "{sys._getframe().f_code.co_name}" was called.')
-    #     textract_client = boto3.client('textract', region_name='us-east-1')
-    #     response_textract_client = textract_client.detect_document_text(Document={'Bytes': image})
-    #     blocks = response_textract_client.get('Blocks')
-
-    #     texts = list()
-    #     for block in blocks: 
-    #         if block.get('BlockType') == 'LINE': 
-    #             logging.info(block['Text'])
-    #             texts.append(block['Text'])
-        
-    #     message = NEWLINE_CODE.join(texts)
-    #     return message
-    
     def generate_response(status_code=None, body=None): 
         logging.debug(f'Function "{sys._getframe().f_code.co_name}" was called.')
         response = {"isBase64Encoded": False, "statusCode": status_code, "headers": {}, "body": body}
         logging.debug(f'Generated response: {response}')
         return response
 
-    # @handler.add(MessageEvent, message=ImageMessage)
-    # def handle_image_message(line_event):
-    #     logging.debug(f'Function "{sys._getframe().f_code.co_name}" was called.')
-    #     message_id = line_event.message.id
-    #     message_content = line_bot_api.get_message_content(message_id)
-    #     image = BytesIO(message_content.content).read()
-    #     message = textract(image=image)
-    #     line_bot_api.reply_message(line_event.reply_token, TextMessage(text=message))
-    #     # return message
-
-    @handler.add(MessageEvent, message=TextMessage)
-    def handle_message(line_event):
+    def textract(image=None):
         logging.debug(f'Function "{sys._getframe().f_code.co_name}" was called.')
-        line_event_message_text = line_event.message.text
-        logging.debug(line_event_message_text)
-        line_bot_api.reply_message(
-            line_event.reply_token, TextSendMessage(text=line_event_message_text))
+        textract_client = boto3.client('textract', region_name='us-east-1')
+        response_textract_client = textract_client.detect_document_text(Document={'Bytes': image})
+
+        texts = list()
+        for block in response_textract_client.get('Blocks'): 
+            if block.get("BlockType") == "LINE": 
+                logging.info(block.get("Text"))
+                texts.append(block.get("Text"))
+        return NEWLINE_CODE.join(texts)
+
+    @handler.add(MessageEvent, message=ImageMessage)
+    def handle_image_message(line_event):
+        logging.debug(f'Function "{sys._getframe().f_code.co_name}" was called.')
+        message_id = line_event.message.id
+        message_content = line_bot_api.get_message_content(message_id)
+        message = textract(image=BytesIO(message_content.content).read())
+        line_bot_api.reply_message(line_event.reply_token, TextMessage(text=message))
 
     try:
         handler.handle(body=body, signature=signature)
+        return generate_response(status_code=200, body='')
 
     except LineBotApiError as e:
         logging.error(f'Got exception from LINE Messaging API: {e.message}')
@@ -104,5 +91,3 @@ def lambda_handler(event, context):
     except InvalidSignatureError as e: 
         logging.error(f'Invalid Signature Error: {e.message}')
         return generate_response(status_code=403, body=e.message)
-
-    return generate_response(status_code=200, body='')
