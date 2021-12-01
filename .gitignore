@@ -1,0 +1,3 @@
+src/functions/textractbot-function/*
+!src/functions/textractbot-function/textractbot-function.py
+!src/functions/textractbot-function/logging.conf
