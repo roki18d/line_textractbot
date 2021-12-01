@@ -1,3 +1,10 @@
-src/functions/textractbot-function/*
-!src/functions/textractbot-function/textractbot-function.py
-!src/functions/textractbot-function/logging.conf
+src/main/python/functions/textractbot_function/*
+!src/main/python/functions/textractbot_function/main.py
+!src/main/python/functions/textractbot_function/logging.conf
+
+src/test/*
+
+artifacts/*
+
+credential.json
+.gitignore
