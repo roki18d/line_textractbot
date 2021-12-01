@@ -32,9 +32,4 @@ Resources:
     Properties:
       Name: apigw-api-textractbot
       StageName: dev
-      MethodSettings: 
-        - !Ref 
       EndpointConfiguration: REGIONAL
-  
-  TextractBotMethod: 
-    Type: 
