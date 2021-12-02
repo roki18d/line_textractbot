@@ -220,6 +220,9 @@ LINE Bot のへの情報アクセスや LINE Bot SDK 利用のために必要な
 
 ## 参考
 
+* [Messaging API overview | LINE Developers](https://developers.line.biz/en/docs/messaging-api/overview/)
+* [AWS SAM+TypeScriptでLINE Bot のサンプルを作成してみました（小ネタ） | DevelopersIO](https://dev.classmethod.jp/articles/line-with-sam-typescript/)
+* [Using AWS Lambda with Amazon API Gateway | AWS Documentation](https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html)
 
 ---
 EOF
