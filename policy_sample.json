@@ -7,7 +7,7 @@
                 "secretsmanager:*"
             ],
             "Resource": [
-                "arn:aws:secretsmanager:ap-northeast-1:706373642737:secret:secretsmanager-secret-textractbot-MsdzTB"
+                "arn:aws:secretsmanager:ap-northeast-1:123412341234:secret:secretsmanager-secret-textractbot-XXXXXX"
             ]
         }
     ]
