@@ -127,23 +127,27 @@ Python 3.7.6
 
 #### B. シークレット情報の確認
 
-LINE Bot のへの情報アクセスや LINE Bot SDK 利用のために必要な情報を確認します。
+LINE Bot のへの情報アクセスや LINE Bot SDK 利用のために必要なシークレット情報を確認します。
 
 * `LINE_CHANNEL_SECRET` ... [Basic Settings] - [Channel Secret]
 * `LINE_CHANNEL_ACCESS_TOKEN` ... [Messaging API] - [Channel access token]
 
-#### C. チャンネルの設定
+#### C. チャンネルの設定【※任意】
 
-
+「友だち追加」時のあいさつメッセージや、自動返信設定を無効化しておきます。
 
 ![Create Channel](img/02-02_Channel-Settings.png)
-
 
 ### 2-3. 各種 AWS リソース
 
 #### A. Secrets Manager シークレットの作成
 
-Secrets Manager
+チャンネル作成時に確認したシークレット情報を、Secrets Manager 上で管理します。適当な名称でシークレットを作成し、以下の Key-Value ペアを格納します。
+
+|Key|Value|
+|:--|:--|
+|LINE_CHANNEL_SECRET| *確認したシークレット* |
+|LINE_CHANNEL_ACCESS_TOKEN| *確認したアクセストークン* |
 
 #### B. IAM ポリシーの作成
 
