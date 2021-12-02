@@ -58,7 +58,9 @@ Python 3.7.6
 
 ## 1. 想定成果物について
 
-### 結局何ができるの？
+### 結局は何を作るの？
+
+![What-is-TextractBot](01-01_What-is-TextractBot.png)
 
 ### アーキテクチャ概要
 
