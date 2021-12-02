@@ -60,7 +60,7 @@ Python 3.7.6
 
 ### 結局は何を作るの？
 
-![What-is-TextractBot](01-01_What-is-TextractBot.png)
+![What-is-TextractBot](img/01-01_What-is-TextractBot.png)
 
 ### アーキテクチャ概要
 
