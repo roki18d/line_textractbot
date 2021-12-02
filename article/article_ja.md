@@ -216,12 +216,19 @@ Lambda 関数のランタイムに含めるライブラリとして、LINE Bot S
 
 ## 3. 動作確認
 
-### 3-1. Webhook URL のテスト
+### 3-1. Webhook URL の動作確認
+
+LINE Developers のチャンネルページから Webhook URL のテストを行います。
+
+* [Messaging API Settings] - [Webhook settings] に遷移する。
+* [Use webhook] が有効になっていることを確認する。
+* "Verify" ボタンを押下し、"Success" が返ってくることを確認します。 
 
 ![Webhook URL Test](img/03-01_Webhook-URL-Test.png)
 
-### 3-2. LINE Bot のテスト
+### 3-2. LINE Bot の動作確認
 
+チャンネルの QR コードを読み取ってチャンネルを友だち追加します。トーク画面から実際にテキスト入り画像を送信し、テキストの内容がメッセージとして返ってくるか確認してみましょう。
 
 ## 4. 落穂拾い
 
