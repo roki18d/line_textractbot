@@ -193,7 +193,7 @@ Lambda 関数のランタイムに含めるライブラリとして、LINE Bot S
 % vi template.yaml
 ```
 
-### 2-6. テンプレートのパッケージ
+### 2-6. テンプレートのパッケージ & デプロイ
 
 ローカルで開発したリソース群を、AWS 上にデプロイ可能なアーティファクトとしてパッケージします。Lambda 関数ランタイムのコード群は指定した S3 バケットにアップロードされ、パッケージ後のテンプレートファイルはその S3 URI を指定しています。
 
@@ -203,8 +203,6 @@ Lambda 関数のランタイムに含めるライブラリとして、LINE Bot S
     --s3-bucket yamagishihrd-artifacts \
     --output-template-file artifacts/packaged-template.yaml
 ```
-
-### 2-7. アーティファクトのデプロイ
 
 パッケージ後のテンプレートファイルを、AWS 上にデプロイします。
 バケット名は任意ですが、本記事では `cf-stack-textractbot` として進めます。
