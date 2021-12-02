@@ -105,7 +105,9 @@ Python 3.7.6
 Python 3.7.6
 ```
 
-### 2-2. LINE チャンネルの作成
+### 2-2. LINE チャンネルの作成・設定
+
+#### A. チャンネルの作成
 
 [LINE Developers](https://developers.line.biz/) にアクセスし、ログインします。LINE Bot を作成するプロバイダを選択し、チャンネルを作成します。
 
@@ -123,9 +125,18 @@ Python 3.7.6
 
 最後に利用規約に同意して、"Create" ボタンを押下してチャンネルを作成します。
 
+#### シークレット情報の確認
+
+
+#### チャンネルの設定
+
+![Create Channel](img/02-02_Channel-Settings.png)
+
+
 ### 2-3. 各種 AWS リソース
 
 #### A. Secrets Manager シークレットの作成
+
 
 #### B. IAM ポリシーの作成
 
