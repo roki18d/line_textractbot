@@ -19,7 +19,7 @@ LINE Botを作ろう！AWSで実現するサーバーレスコンピューティ
 
 * 利用可能なAWSアカウントを有していること。
 * IAMユーザが払い出されており、実施に必要な権限 (ロール, ポリシー 等) が付与されていること。
-* AWS CLI がインストールされていること。
+* ローカル開発環境に AWS CLI がインストールされていること。
 
 #### LINE 
 
@@ -138,7 +138,7 @@ LINE Bot のへの情報アクセスや LINE Bot SDK 利用のために必要な
 
 ![Create Channel](img/02-02_Channel-Settings.png)
 
-### 2-3. 各種 AWS リソース
+### 2-3. 各種 AWS リソースの作成
 
 #### A. Secrets Manager シークレットの作成
 
@@ -148,6 +148,8 @@ LINE Bot のへの情報アクセスや LINE Bot SDK 利用のために必要な
 |:--|:--|
 |LINE_CHANNEL_SECRET| *確認したシークレット* |
 |LINE_CHANNEL_ACCESS_TOKEN| *確認したアクセストークン* |
+
+> Lambda 関数の環境変数にセットしてしまうという手もありますが、機微な情報を各リソースに散在させたくないという意図から Secrets Manager を利用しています。
 
 #### B. IAM ポリシーの作成
 
@@ -161,19 +163,27 @@ LINE Bot のへの情報アクセスや LINE Bot SDK 利用のために必要な
         {
             "Effect": "Allow",
             "Action": ["secretsmanager:*"],
-            "Resource": ["arn:aws:secretsmanager:ap-northeast-1:{Your AWS Account}:secret:secretsmanager-secret-textractbot-XXXXXX"]
+            "Resource": ["arn:aws:secretsmanager:ap-northeast-1:123412341234:secret:secretsmanager-secret-textractbot-XXXXXX"]
         }
     ]
 }
 ```
-
 
 #### C. S3 バケットの作成
 
 パッケージ済みアーティファクトのアップロード先となる S3 バケットを作成しておきます。
 バケット名は任意ですが、本記事では `yamagishihrd-artifacts` として進めます。
 
-### 2-4. テンプレートファイルの編集
+
+### 2-4. LINE Bot SDK のインストール
+
+Lambda 関数のランタイムに含めるライブラリとして、LINE Bot SDK をインストールします。pip によるインストール時にターゲットディレクトリを指定します。
+
+```
+% pip install -t src/main/python/functions/textractbot_function/
+```
+
+### 2-5. テンプレートファイルの編集
 
 `template_sample.yaml` の内容を参考に、自身の環境に合わせて `template.yaml` を作成・編集します。
 主に修正が必要な項目は、「カスタムポリシーARN」と「シークレットARN」です。
@@ -183,7 +193,9 @@ LINE Bot のへの情報アクセスや LINE Bot SDK 利用のために必要な
 % vi template.yaml
 ```
 
-### 2-5. テンプレートのパッケージ
+### 2-6. テンプレートのパッケージ
+
+ローカルで開発したリソース群を、AWS 上にデプロイ可能なアーティファクトとしてパッケージします。Lambda 関数ランタイムのコード群は指定した S3 バケットにアップロードされ、パッケージ後のテンプレートファイルはその S3 URI を指定しています。
 
 ```zsh
 % aws cloudformation package \
@@ -192,7 +204,10 @@ LINE Bot のへの情報アクセスや LINE Bot SDK 利用のために必要な
     --output-template-file artifacts/packaged-template.yaml
 ```
 
-### 2-6. アーティファクトのデプロイ
+### 2-7. アーティファクトのデプロイ
+
+パッケージ後のテンプレートファイルを、AWS 上にデプロイします。
+バケット名は任意ですが、本記事では `cf-stack-textractbot` として進めます。
 
 ```zsh
 % aws cloudformation deploy \
