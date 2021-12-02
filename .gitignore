@@ -3,8 +3,7 @@ src/main/python/functions/textractbot_function/*
 !src/main/python/functions/textractbot_function/logging.conf
 
 src/test/*
-
 artifacts/*
 
+article.md
 credential.json
-.gitignore
