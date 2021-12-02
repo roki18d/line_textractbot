@@ -218,6 +218,8 @@ Lambda 関数のランタイムに含めるライブラリとして、LINE Bot S
 
 ### 3-1. Webhook URL のテスト
 
+![Webhook URL Test](img/03-01_Webhook-URL-Test.png)
+
 ### 3-2. LINE Bot のテスト
 
 
