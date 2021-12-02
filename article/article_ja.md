@@ -173,21 +173,39 @@ LINE Bot のへの情報アクセスや LINE Bot SDK 利用のために必要な
 パッケージ済みアーティファクトのアップロード先となる S3 バケットを作成しておきます。
 バケット名は任意ですが、本記事では `yamagishihrd-artifacts` として進めます。
 
-### 2-4. Lambda 関数の設定
+### 2-4. テンプレートファイルの編集
 
-### 2-5. テンプレートファイルの編集 & パッケージ
+`template_sample.yaml` の内容を参考に、自身の環境に合わせて `template.yaml` を作成・編集します。
+主に修正が必要な項目は、「カスタムポリシーARN」と「シークレットARN」です。
+
+```zsh
+% cp template_sample.yaml template.yaml
+% vi template.yaml
+```
+
+### 2-5. テンプレートのパッケージ
+
+```zsh
+% aws cloudformation package \
+    --template-file template.yaml \                   
+    --s3-bucket yamagishihrd-artifacts \
+    --output-template-file artifacts/packaged-template.yaml
+```
 
 ### 2-6. アーティファクトのデプロイ
 
+```zsh
+% aws cloudformation deploy \
+    --template-file artifacts/packaged-template.yaml \
+    --stack-name cf-stack-textractbot \
+    --capabilities CAPABILITY_IAM
+```
+
 ## 3. 動作確認
 
-### 3-1. Lambda 関数のテスト
+### 3-1. Webhook URL のテスト
 
-### 3-2. API Gateway のテスト
-
-### 3-3. Webhook URL のテスト
-
-### 3-4. LINE Bot のテスト
+### 3-2. LINE Bot のテスト
 
 
 ## 4. 落穂拾い
