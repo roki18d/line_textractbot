@@ -107,7 +107,21 @@ Python 3.7.6
 
 ### 2-2. LINE チャンネルの作成
 
+[LINE Developers](https://developers.line.biz/) にアクセスし、ログインします。LINE Bot を作成するプロバイダを選択し、チャンネルを作成します。
+
 ![Create Channel](img/02-02_Create-Channel.png)
+
+|Key|Value|
+|:--|:--|
+|Channel Type|Messaging API|
+|Provider| *Provider Name* |
+|Channel name|TextractBot|
+|Channel description|LINE Bot for Text Extraction from Image|
+|Category| *(Any you want)* |
+|Subcategory| *(Any you want)* |
+|Email address| *Your Email Address* |
+
+最後に利用規約に同意して、"Create" ボタンを押下してチャンネルを作成します。
 
 ### 2-3. 各種 AWS リソース
 
