@@ -130,7 +130,7 @@ Python 3.7.6
 LINE Bot のへの情報アクセスや LINE Bot SDK 利用のために必要なシークレット情報を確認します。
 
 * `LINE_CHANNEL_SECRET` ... [Basic Settings] - [Channel Secret]
-* `LINE_CHANNEL_ACCESS_TOKEN` ... [Messaging API] - [Channel access token]
+* `LINE_CHANNEL_ACCESS_TOKEN` ... [Messaging API Settings] - [Channel access token]
 
 #### C. チャンネルの設定【※任意】
 
@@ -251,7 +251,7 @@ Lambda 関数側でかなりのロギング設定を入れていますので、�
 
 ## さいごに
 
-LINE Bot 開発については色々な方が情報発信されていますが、画像メッセージを扱ったり、Secrets Manager を利用するアーキテクチャはあまり情報がないかなと思い、今回記事にしてみました。いかがだったでしょうか。
+LINE Bot 開発については色々な方が情報発信されていますが、画像メッセージを扱ったり、Secrets Manager を利用するアーキテクチャはあまり情報がないかなと思い、今回記事にしてみました。いかがでしたでしょうか。
 
 普段はサーバーサイドやデータ分析基盤関連のお仕事をしていますが、時々はフロントエンド界隈の動向にも目を向けていきたいと思います。
 
