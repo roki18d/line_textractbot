@@ -8,3 +8,4 @@ artifacts/*
 .python-version
 credential.json
 policy.json
+template.yaml
