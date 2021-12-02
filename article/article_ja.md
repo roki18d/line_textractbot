@@ -62,7 +62,7 @@ Python 3.7.6
 
 ### アーキテクチャ概要
 
-
+![Architecture](img/01-02_Architecture.png)
 
 ## 2. 実施手順
 
