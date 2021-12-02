@@ -4,16 +4,16 @@ LINE Botを作ろう！AWSで実現するサーバーレスコンピューティ
 はじめに
 ------------------------------------------------------------
 
-### 記事概要
+### a. 記事概要
 
 * [LINEの開発者用SDK](https://github.com/moleike/line-bot-sdk)とAWSを用いてLINE Botを作成します。
 
-### 想定読者
+### a. 想定読者
 
-* AWS におけるサーバーレス実現方式や SAM (Serverless Application Model) について学びたい方。
+* AWS の利用経験があり、サーバーレス実現方式や SAM (Serverless Application Model) について学びたい方。
 * 何でも良いからとりあえず LINE Bot を作ってみたい方。
 
-### 前提条件
+### b. 前提条件
 
 #### AWS
 
@@ -26,13 +26,13 @@ LINE Botを作ろう！AWSで実現するサーバーレスコンピューティ
 * [LINE Developers](https://developers.line.biz/) の利用登録が完了していること。
 * プロバイダの設定が完了していること。※ 作成する Bot (=チャンネル) はプロバイダに紐づきます。
 
-### リソース
+### c. リソース
 
 本記事で使用するリソースは、GitHubに公開しています。
 
 * [roki18d / line_textractbot | GitHub](https://github.com/roki18d/line_textractbot)
 
-### 動作確認環境
+### d. 動作確認環境
 
 筆者が動作確認を行った環境は以下の通りです。
 
@@ -125,10 +125,16 @@ Python 3.7.6
 
 最後に利用規約に同意して、"Create" ボタンを押下してチャンネルを作成します。
 
-#### シークレット情報の確認
+#### B. シークレット情報の確認
+
+LINE Bot のへの情報アクセスや LINE Bot SDK 利用のために必要な情報を確認します。
+
+* `LINE_CHANNEL_SECRET` ... [Basic Settings] - [Channel Secret]
+* `LINE_CHANNEL_ACCESS_TOKEN` ... [Messaging API] - [Channel access token]
+
+#### C. チャンネルの設定
 
 
-#### チャンネルの設定
 
 ![Create Channel](img/02-02_Channel-Settings.png)
 
@@ -137,10 +143,31 @@ Python 3.7.6
 
 #### A. Secrets Manager シークレットの作成
 
+Secrets Manager
 
 #### B. IAM ポリシーの作成
 
+作成したシークレットに格納されているシークレット情報を、Lambda 関数からアクセスできるようにするための IAM ポリシーを作成します。
+ポリシー名は任意ですが、本記事では `TextractBot_SecretsManagerFullAccess` として進めます。以下にポリシードキュメントの例を示します。
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": ["secretsmanager:*"],
+            "Resource": ["arn:aws:secretsmanager:ap-northeast-1:{Your AWS Account}:secret:secretsmanager-secret-textractbot-XXXXXX"]
+        }
+    ]
+}
+```
+
+
 #### C. S3 バケットの作成
+
+パッケージ済みアーティファクトのアップロード先となる S3 バケットを作成しておきます。
+バケット名は任意ですが、本記事では `yamagishihrd-artifacts` として進めます。
 
 ### 2-4. Lambda 関数の設定
 
