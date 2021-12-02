@@ -60,7 +60,7 @@ Python 3.7.6
 
 ### 結局何ができるの？
 
-### アーキテクチャ
+### アーキテクチャ概要
 
 
 
@@ -68,7 +68,23 @@ Python 3.7.6
 
 ### 2-1. 事前準備
 
-### 2-2. LINE Channel の作成
+適当なディレクトリ（以下、`$WORK_DIR`）配下で Git リポジトリをクローンし、移動します。
+
+```zsh
+% cd $WORKDIR
+% git clone git@github.com:roki18d/glue-job-local-execution.git
+% cd glue-job-local-execution
+```
+
+必要に応じて、pyenv や conda 等の Python 仮想環境にスイッチします。本記事では予め作成している `aws` という pyenv 仮想環境を使用します。
+
+```zsh
+% pyenv local aws
+% python --version
+Python 3.7.6
+```
+
+### 2-2. LINE チャンネルの作成
 
 ### 2-3. 各種 AWS リソース
 
